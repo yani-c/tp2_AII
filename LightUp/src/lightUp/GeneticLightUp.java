@@ -6,13 +6,13 @@ import org.jgap.impl.*;
 public class GeneticLightUp{
 
 	
-	  //private static final int MAX_ALLOWED_EVOLUTIONS = 50;
+	  private static final int MAX_ALLOWED_EVOLUTIONS = 50;
 	  
 	  public static void main(String[] args) {
 		  
 	  }
 	
-	  public static int cantWhite(Pair<Boolean,Integer>[][] board) {
+	  public static int cantWhite(Casilla[][] board) {
 		  int cant=0;
 		  for(int i=0;i<7;i++) {
 			  for(int j=0;j<7;j++) {
@@ -24,26 +24,51 @@ public class GeneticLightUp{
 		  return cant;
 	  }
 	  
-	  public static void definition(Pair<Boolean,Integer>[][] board) throws Exception {
+	  public static void definition(Casilla[][] board) throws Exception {
 		  Configuration conf = new DefaultConfiguration();
 		  conf.setPreservFittestIndividual(true);
 		  conf.setKeepPopulationSizeConstant(false);
-		  FitnessFunction myFunc = new makeFitnessFunction(cantWhite(board));
+		  FitnessFunction myFunc = new makeFitnessFunction(board);
 		  conf.setBulkFitnessFunction(new BulkFitnessOffsetRemover(myFunc));
 		  conf.setFitnessFunction(myFunc);
-		  Gene[] sampleGenes = new Gene[2];
+		  Gene[] sampleGenes = new Gene[49];
 		  //IntegerGene gene = new IntegerGene(conf,0,1);
 		  //gene.setConstraintChecker(new EnergyGeneConstraintChecker());
-		  sampleGenes[0]= IntegerGene gene = new IntegerGene(conf,0,0);
-		  sampleGenes[1]= IntegerGene gene = new IntegerGene(conf,0,1);
+		  for(int i=0;i<sampleGenes.length;i++) {
+		  sampleGenes[i]= new IntegerGene(conf,0,1);
+		  //genes[i].setAllele(new Integer(i));
+		  }
 		  IChromosome sampleChromosome = new Chromosome(conf, sampleGenes);
 		  conf.setSampleChromosome(sampleChromosome);
 		  conf.setPopulationSize(10);
-		  Genotype population = Genotype.randomInitialGenotype(conf);
+		  IChromosome[] cromosomas = new IChromosome[conf.getPopulationSize()];
+		  Gene[] muestra_genes = sampleChromosome.getGenes();
+	      for (int i = 0; i < cromosomas.length; i++) {
+	    	  Gene[] genes = new Gene[muestra_genes.length];
+	    	  for (int k = 0; k < genes.length; k++) {
+	    		  genes[k] = muestra_genes[k].newGene();
+	              genes[k].setAllele(muestra_genes[k].getAllele());
+	    	  }
+	    	  cromosomas[i] = new Chromosome(conf, genes);
+	      }
+	      Genotype poblacion = new Genotype(conf, new Population(conf, cromosomas));
+	      /*
+	      IChromosome mejor_cromosoma = null;
+	        for(int num_evoluciones = 0; (num_evoluciones < MAX_ALLOWED_EVOLUTIONS || !evolucion_iterada) && evolucionActivada; num_evoluciones++){
+	            poblacion.evolve();
+	            mejor_cromosoma = poblacion.getFittestChromosome();
+	            CodificadorGenotipo.obtenerInstancia().cambiarSolucion(mejor_cromosoma);
+	            if(mejor_cromosoma.getFitnessValue() == maxCruzamiento()){
+	                evolucionActivada = false;
+	            }
+	        }
+	        num_evoluciones --;*/
+	      ////
+		  //Genotype population = Genotype.randomInitialGenotype(conf);
 		  for (int i = 0; i < MAX_ALLOWED_EVOLUTIONS; i++) {
-		      population.evolve();
+		      poblacion.evolve();
 		  }
-		  IChromosome bestSolutionSoFar = population.getFittestChromosome();
+		  IChromosome bestSolutionSoFar = poblacion.getFittestChromosome();
 	  }
 	  
 	  
