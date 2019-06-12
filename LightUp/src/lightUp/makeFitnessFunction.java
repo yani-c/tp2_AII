@@ -23,14 +23,11 @@ public class makeFitnessFunction extends FitnessFunction{
 	public int getCantIluminadas(IChromosome c) {
 		Boolean[][] iluminadas= new Boolean[7][7];
 		Casilla[][] aux= completeBoard(c);
-		System.out.println(GeneticLightUp.getTablero(aux));
 		inicializarTablero(iluminadas);
 		for(int i=0;i<7;i++) {
 			for(int j=0;j<7;j++) {
 				//si es una casilla blanca y tiene foco
 				if((aux[i][j].getFst()) && (aux[i][j].getSnd()>0)) {
-					//System.out.println("mi seg es"+aux[i][j].getSnd());
-					//System.out.println("soy "+aux[i][j].toString());
 					//iluminamos tablero
 					iluminarTablero(aux,iluminadas,i,j);
 				}
@@ -65,43 +62,31 @@ public class makeFitnessFunction extends FitnessFunction{
 	}
 	
 	public void iluminarArriba(Casilla[][] board, Boolean[][] iluminadas, int i,int j) {
-		int cant=0;
 		while(i>=0 && board[i][j].getFst()) {
 			iluminadas[i][j]=true;
 			i--;
-			cant++;
 		}
-	//	System.out.println("Arriba : "+cant);
 	}
 	
 	public void iluminarAbajo(Casilla[][] board, Boolean[][] iluminadas, int i,int j) {
-		int cant=0;
 		while(i<7 && board[i][j].getFst()) {
 			iluminadas[i][j]=true;
 			i++;
-			cant++;
 		}
-		//System.out.println("Abajo : "+cant);
 	}
 	
 	public void iluminarDerecha(Casilla[][] board, Boolean[][] iluminadas, int i,int j) {
-		int cant=0;
 		while(j<7 && board[i][j].getFst()) {
 			iluminadas[i][j]=true;
 			j++;
-			cant++;
 		}
-		//System.out.println("Derecha : "+cant);
 	}
 	
 	public void iluminarIzquierda(Casilla[][] board, Boolean[][] iluminadas, int i,int j) {
-		int cant=0;
 		while(j>=0 && board[i][j].getFst()) {
 			iluminadas[i][j]=true;
 			j--;
-			cant++;
 		}
-	//	System.out.println("Izquierda : "+cant);
 	}
 	
 	
@@ -124,24 +109,28 @@ public class makeFitnessFunction extends FitnessFunction{
 		}
 	
 	public int getCantConflictos(IChromosome c) {
-		int cant= conflictosLugar(c);
-		cant=cant+conflictosCasillasNegras(c);
+		Casilla[][] aux= completeBoard(c);
+		int cant= conflictosLugar(aux);
+		cant=cant+conflictosCasillasNegras(aux);
 		return cant;
 	}
 	
-	public int conflictosLugar(IChromosome c) {
+	public int conflictosLugar(Casilla[][] aux) {
 		int conflictos=0;
 		//miro las filas
 		for(int i=0;i<7;i++) {
 			boolean hayFoco=false;
 			for(int j=0;j<7;j++) {
-				if(board[i][j].getFst() && !hayFoco) {
+				//si es blanca, tiene foco y no encontre foco en la misma linea que ilumina
+				if(aux[i][j].getFst() && aux[i][j].getSnd()==1 && !hayFoco) {
 					hayFoco=true;
 				}
-				else if(!board[i][j].getFst() && hayFoco) {
+				//si es negra y habia foco
+				else if(!aux[i][j].getFst() && hayFoco) {
 					hayFoco=false;
 				}
-				else if(board[i][j].getFst() && hayFoco) {
+				//si es blanca, tiene foco y habia foco antes
+				else if(aux[i][j].getFst() && aux[i][j].getSnd()==1 && hayFoco) {
 					conflictos++;
 				}
 			}
@@ -150,13 +139,13 @@ public class makeFitnessFunction extends FitnessFunction{
 		for(int i=0;i<7;i++) {
 			boolean hayFoco=false;
 			for(int j=0;j<7;j++) {
-				if(board[j][i].getFst() && !hayFoco) {
+				if(aux[j][i].getFst() && aux[j][i].getSnd()==1 &&  !hayFoco) {
 					hayFoco=true;
 				}
-				else if(!board[j][i].getFst() && hayFoco) {
+				else if(!aux[j][i].getFst() && hayFoco) {
 					hayFoco=false;
 				}
-				else if(board[j][i].getFst() && hayFoco) {
+				else if(aux[j][i].getFst() && aux[j][i].getSnd()==1 && hayFoco) {
 					conflictos++;
 				}
 			}
@@ -164,33 +153,33 @@ public class makeFitnessFunction extends FitnessFunction{
 		return conflictos;
 	}
 	
-	public int conflictosCasillasNegras(IChromosome c) {
+	public int conflictosCasillasNegras(Casilla[][] aux) {
 		int conflictos=0;
 		for(int i=0;i<7;i++) {
 			for(int j=0;j<7;j++) {
-				if(!board[i][j].getFst() && board[i][j].getSnd()>0) {
+				if(!aux[i][j].getFst() && aux[i][j].getSnd()>0) {
 					int focos=0;
 					//miro arriba de la casilla, si es que se puede
-					if(i-1>=0 && board[i-1][j].getFst() && board[i-1][j].getSnd()==1) {
+					if(i-1>=0 && aux[i-1][j].getFst() && aux[i-1][j].getSnd()==1) {
 						//si puedo moverme para arriba, y la de arriba es una casilla blanca y si tiene  foco
 						focos++;
 					}
 					//miro abajo de la casilla, si es que se puede
-					if(i+1<7 && board[i+1][j].getFst() && board[i+1][j].getSnd()==1) {
+					if(i+1<7 && aux[i+1][j].getFst() && aux[i+1][j].getSnd()==1) {
 						//
 						focos++;
 					}
 					//miro a la derecha de la casilla, si es que se puede
-					if(j+1<7 && board[i][j+1].getFst() && board[i][j+1].getSnd()==1) {
+					if(j+1<7 && aux[i][j+1].getFst() && aux[i][j+1].getSnd()==1) {
 						//
 						focos++;
 					}
 					//miro a la izquierda de la casilla, si es que se puede
-					if(j-1>=0 && board[i][j-1].getFst() && board[i][j-1].getSnd()==1) {
+					if(j-1>=0 && aux[i][j-1].getFst() && aux[i][j-1].getSnd()==1) {
 						//
 						focos++;
 					}
-					if(focos!=board[i][j].getSnd()) {
+					if(focos!=aux[i][j].getSnd()) {
 						conflictos++;
 					}
 				}
