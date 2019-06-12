@@ -6,7 +6,7 @@ import org.jgap.impl.*;
 public class GeneticLightUp{
 
 	
-	  private static final int MAX_ALLOWED_EVOLUTIONS = 50;
+	  private static final int MAX_ALLOWED_EVOLUTIONS = 120;
 	  
 	  public static void main(String[] args) throws Exception {
 			Casilla blanca= new Casilla(true,0);
@@ -18,6 +18,7 @@ public class GeneticLightUp{
 				{new Casilla(false,-1),blanca,blanca,new Casilla(false,3),blanca,blanca,blanca},
 				{blanca,new Casilla(false,3),blanca,blanca,blanca,new Casilla(false,2),blanca},
 				{blanca,blanca,blanca,blanca,new Casilla(false,-1),blanca,blanca}};
+			//poner a definition en un while, mientras no sea 37 o llegue a cierta cantidad de iteraciones
 			definition(aux);
 	  }
 	  

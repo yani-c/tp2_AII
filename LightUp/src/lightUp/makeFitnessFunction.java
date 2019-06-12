@@ -17,7 +17,7 @@ public class makeFitnessFunction extends FitnessFunction{
 	protected double evaluate(IChromosome c) {
 		int cantIluminadas= getCantIluminadas(c);
 		int cantConflictos= getCantConflictos(c);
-		return ((cantIluminadas)/(cantConflictos + 1));
+		return ((cantIluminadas+0.0)/(0.0+cantConflictos + 1));
 	}
 	
 	public int getCantIluminadas(IChromosome c) {
@@ -110,6 +110,7 @@ public class makeFitnessFunction extends FitnessFunction{
 	
 	public int getCantConflictos(IChromosome c) {
 		Casilla[][] aux= completeBoard(c);
+		System.out.println(GeneticLightUp.getTablero(aux));
 		int cant= conflictosLugar(aux);
 		cant=cant+conflictosCasillasNegras(aux);
 		return cant;
@@ -180,11 +181,19 @@ public class makeFitnessFunction extends FitnessFunction{
 						focos++;
 					}
 					if(focos!=aux[i][j].getSnd()) {
-						conflictos++;
+						if(focos>aux[i][j].getSnd()) {
+							int conf=focos-aux[i][j].getSnd();
+							conflictos=conflictos+conf;
+						}
+						else {
+							int conf=aux[i][j].getSnd()-focos;
+							conflictos=conflictos+conf;
+						}
 					}
 				}
 			}
 		}
+		System.out.println("NEGRAS "+conflictos);
 		return conflictos;
 	}
 	
