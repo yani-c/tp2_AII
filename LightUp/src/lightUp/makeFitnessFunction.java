@@ -6,6 +6,7 @@ public class makeFitnessFunction extends FitnessFunction{
 
 	//private static final long serialVersionUID = a;
 	
+	
 	private final Casilla[][] board;
 
     public makeFitnessFunction(Casilla[][] board){
@@ -22,11 +23,14 @@ public class makeFitnessFunction extends FitnessFunction{
 	public int getCantIluminadas(IChromosome c) {
 		Boolean[][] iluminadas= new Boolean[7][7];
 		Casilla[][] aux= completeBoard(c);
+		System.out.println(GeneticLightUp.getTablero(aux));
 		inicializarTablero(iluminadas);
 		for(int i=0;i<7;i++) {
 			for(int j=0;j<7;j++) {
 				//si es una casilla blanca y tiene foco
-				if(aux[i][j].getFst() && aux[i][j].getSnd()>0) {
+				if((aux[i][j].getFst()) && (aux[i][j].getSnd()>0)) {
+					//System.out.println("mi seg es"+aux[i][j].getSnd());
+					//System.out.println("soy "+aux[i][j].toString());
 					//iluminamos tablero
 					iluminarTablero(aux,iluminadas,i,j);
 				}
@@ -43,7 +47,7 @@ public class makeFitnessFunction extends FitnessFunction{
 		return cant;
 	}
 	
-	private void inicializarTablero(Boolean[][] iluminadas) {
+	public void inicializarTablero(Boolean[][] iluminadas) {
 		for(int i=0;i<7;i++) {
 			for(int j=0;j<7;j++) {
 				iluminadas[i][j]=false;
@@ -61,31 +65,43 @@ public class makeFitnessFunction extends FitnessFunction{
 	}
 	
 	public void iluminarArriba(Casilla[][] board, Boolean[][] iluminadas, int i,int j) {
+		int cant=0;
 		while(i>=0 && board[i][j].getFst()) {
 			iluminadas[i][j]=true;
 			i--;
+			cant++;
 		}
+	//	System.out.println("Arriba : "+cant);
 	}
 	
 	public void iluminarAbajo(Casilla[][] board, Boolean[][] iluminadas, int i,int j) {
+		int cant=0;
 		while(i<7 && board[i][j].getFst()) {
 			iluminadas[i][j]=true;
 			i++;
+			cant++;
 		}
+		//System.out.println("Abajo : "+cant);
 	}
 	
 	public void iluminarDerecha(Casilla[][] board, Boolean[][] iluminadas, int i,int j) {
+		int cant=0;
 		while(j<7 && board[i][j].getFst()) {
 			iluminadas[i][j]=true;
 			j++;
+			cant++;
 		}
+		//System.out.println("Derecha : "+cant);
 	}
 	
 	public void iluminarIzquierda(Casilla[][] board, Boolean[][] iluminadas, int i,int j) {
+		int cant=0;
 		while(j>=0 && board[i][j].getFst()) {
 			iluminadas[i][j]=true;
-			j++;
+			j--;
+			cant++;
 		}
+	//	System.out.println("Izquierda : "+cant);
 	}
 	
 	
@@ -95,7 +111,7 @@ public class makeFitnessFunction extends FitnessFunction{
 		for(int i=0;i<7;i++) {
 			for(int j=0;j<7;j++) {
 				if(board[i][j].getFst()) {
-					boardAux[i][j]= (Casilla) c.getGene(k);
+					boardAux[i][j]= new Casilla(true,(Integer) c.getGene(k).getAllele());
 				}
 				else {
 					boardAux[i][j]=board[i][j];

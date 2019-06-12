@@ -8,8 +8,17 @@ public class GeneticLightUp{
 	
 	  private static final int MAX_ALLOWED_EVOLUTIONS = 50;
 	  
-	  public static void main(String[] args) {
-		  
+	  public static void main(String[] args) throws Exception {
+			Casilla blanca= new Casilla(true,0);
+			Casilla[][] aux={
+				{blanca,blanca,new Casilla(false,-1),blanca,blanca,blanca,blanca,},
+				{blanca,new Casilla(false,-1),blanca,blanca,blanca,new Casilla(false,4),blanca},
+				{blanca,blanca,blanca,new Casilla(false,-1),blanca,blanca,new Casilla(false,-1)},
+				{blanca,blanca,new Casilla(false,1),blanca,new Casilla(false,-1),blanca,blanca},
+				{new Casilla(false,-1),blanca,blanca,new Casilla(false,3),blanca,blanca,blanca},
+				{blanca,new Casilla(false,3),blanca,blanca,blanca,new Casilla(false,2),blanca},
+				{blanca,blanca,blanca,blanca,new Casilla(false,-1),blanca,blanca}};
+		  definition(aux);
 	  }
 	
 	  public static int cantWhite(Casilla[][] board) {
@@ -29,7 +38,6 @@ public class GeneticLightUp{
 		  conf.setPreservFittestIndividual(true);
 		  conf.setKeepPopulationSizeConstant(false);
 		  FitnessFunction myFunc = new makeFitnessFunction(board);
-		  conf.setBulkFitnessFunction(new BulkFitnessOffsetRemover(myFunc));
 		  conf.setFitnessFunction(myFunc);
 		  Gene[] sampleGenes = new Gene[49];
 		  //IntegerGene gene = new IntegerGene(conf,0,1);
@@ -47,7 +55,7 @@ public class GeneticLightUp{
 	    	  Gene[] genes = new Gene[muestra_genes.length];
 	    	  for (int k = 0; k < genes.length; k++) {
 	    		  genes[k] = muestra_genes[k].newGene();
-	              genes[k].setAllele(muestra_genes[k].getAllele());
+	             // genes[k].setAllele(muestra_genes[k].getAllele());
 	    	  }
 	    	  cromosomas[i] = new Chromosome(conf, genes);
 	      }
@@ -69,6 +77,23 @@ public class GeneticLightUp{
 		      poblacion.evolve();
 		  }
 		  IChromosome bestSolutionSoFar = poblacion.getFittestChromosome();
+	  }
+	  
+	  public static String getTablero(Casilla[][] board) {
+		  String a="";
+		  for(int i=0;i<7;i++) {
+			  a=a+"\n";
+			  for(int j=0;j<7;j++) {
+				  if(board[i][j].getFst()) {
+					  a=a+"|"+board[i][j].getSnd()+"|";
+				  }
+				  else {
+					  a=a+"|*"+board[i][j].getSnd()+"|";
+				  }
+			  }
+		  }
+		  a=a+"\n";
+		  		return a;
 	  }
 	  
 	  

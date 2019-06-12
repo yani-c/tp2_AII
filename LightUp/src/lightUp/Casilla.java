@@ -15,6 +15,7 @@ public class Casilla {
 		snd=s;
 	}
 	
+	
 	public Boolean getFst() {
 		return fst;
 	}
@@ -33,6 +34,11 @@ public class Casilla {
 	
 	public boolean equals(Casilla p) {
 		return ((p.getFst().compareTo(this.getFst())==0) &&(p.getSnd().compareTo(this.getSnd())==0));
+	}
+	
+	public String toString() {
+		String a="("+getFst()+","+getSnd()+")";
+		return a;
 	}
 	
 }
