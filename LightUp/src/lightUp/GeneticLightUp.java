@@ -66,11 +66,11 @@ public class GeneticLightUp{
 		      }
 		  }
 		  if(bestSolutionSoFar.getFitnessValue() >= cantWhite(board)){
-			  System.out.println("Solution found, improving");
+			  System.out.println("Solution found, improving...");
 			  for(int l = 0; l<1000;l++) {
 				  poblacion.evolve();
 			  }
-			  System.out.println("fitness : "+bestSolutionSoFar.getFitnessValue());
+			  System.out.println("Fitness value: "+bestSolutionSoFar.getFitnessValue());
 			  Casilla[][] tablerito= myFunc.completeBoard(bestSolutionSoFar);
 			  System.out.println(getTablero(tablerito));  
 		  }
