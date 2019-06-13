@@ -22,6 +22,18 @@ public class GeneticLightUp{
 			definition(aux);
 	  }
 	  
+	  public static int cantWhite(Casilla[][] board) {
+		  int cant=0;
+		  for(int i=0;i<7;i++) {
+			  for(int j=0;j<7;j++) {
+				  if(board[i][j].getFst()) {
+					  cant++;
+				  }
+			  }
+		  }
+		  return cant;
+	  }
+	  
 	  public static void definition(Casilla[][] board) throws Exception {
 		  Configuration conf = new DefaultConfiguration();
 		  conf.setPreservFittestIndividual(true);
@@ -49,11 +61,15 @@ public class GeneticLightUp{
 		  for (int i = 0; i < MAX_ALLOWED_EVOLUTIONS; i++) {
 		      poblacion.evolve();
 		      bestSolutionSoFar = poblacion.getFittestChromosome();
-		      if(bestSolutionSoFar.getFitnessValue() >= 36) {
+		      if(bestSolutionSoFar.getFitnessValue() >= cantWhite(board)) {
 		    	  i = MAX_ALLOWED_EVOLUTIONS;
 		      }
 		  }
-		  if(bestSolutionSoFar.getFitnessValue() >= 36){
+		  if(bestSolutionSoFar.getFitnessValue() >= cantWhite(board)){
+			  System.out.println("Solution found, improving");
+			  for(int l = 0; l<1000;l++) {
+				  poblacion.evolve();
+			  }
 			  System.out.println("fitness : "+bestSolutionSoFar.getFitnessValue());
 			  Casilla[][] tablerito= myFunc.completeBoard(bestSolutionSoFar);
 			  System.out.println(getTablero(tablerito));  

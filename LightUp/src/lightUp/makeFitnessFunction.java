@@ -15,10 +15,20 @@ public class makeFitnessFunction extends FitnessFunction{
 
 	@Override
 	protected double evaluate(IChromosome c) {
+		int cantFocos = getCantFocos(c);
 		int cantIluminadas= getCantIluminadas(c);
 		int cantConflictos= getCantConflictos(c);
-		return ((cantIluminadas+0.0)/(0.0+cantConflictos + 1));
+		return ((cantIluminadas+0.0)/(0.0+cantConflictos + 1)+(1.0/(cantFocos+0.0)));
 	}
+	
+	public int getCantFocos(IChromosome c){
+		int focos =0;
+		for(Gene g : c.getGenes()) {
+			focos+= (Integer)g.getAllele();
+		}
+		return focos;
+	}
+	
 	
 	public int getCantIluminadas(IChromosome c) {
 		Boolean[][] iluminadas= new Boolean[7][7];
