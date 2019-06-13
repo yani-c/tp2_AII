@@ -38,6 +38,17 @@ public class DuidokuState implements AdversarySearchState {
 	public Casilla[][] getBoard(){
 		return board;
 	}
+	public String toStringBoard(){
+		String a="";
+		for(int i=0;i<9;i++) {
+			a=a+"\n";
+			for(int j=0;j<9;j++) {
+				a=a+"|"+board[i][j].getSnd()+"|";
+			}
+		}
+		 a=a+"\n";
+		 return a;
+	}
 	
 
 	@Override
