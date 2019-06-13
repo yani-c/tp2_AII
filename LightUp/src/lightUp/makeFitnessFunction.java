@@ -110,7 +110,7 @@ public class makeFitnessFunction extends FitnessFunction{
 	
 	public int getCantConflictos(IChromosome c) {
 		Casilla[][] aux= completeBoard(c);
-		System.out.println(GeneticLightUp.getTablero(aux));
+	//	System.out.println(GeneticLightUp.getTablero(aux));
 		int cant= conflictosLugar(aux);
 		cant=cant+conflictosCasillasNegras(aux);
 		return cant;
@@ -193,7 +193,7 @@ public class makeFitnessFunction extends FitnessFunction{
 				}
 			}
 		}
-		System.out.println("NEGRAS "+conflictos);
+//		System.out.println("NEGRAS "+conflictos);
 		return conflictos;
 	}
 	
