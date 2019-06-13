@@ -2,48 +2,47 @@ package duidoku;
 
 public abstract class AdversarySearchEngine<P extends AdversarySearchProblem<S>, S extends AdversarySearchState> {
 
-
-	protected P problem; // a reference to the problem to apply search to
-
-	protected int maxDepth; // indicates the maximum depth used for the search
-	    
+    
+    protected P problem; // a reference to the problem to apply search to
+    
+    protected int maxDepth; // indicates the maximum depth used for the search
+    
 	/** 
-	* Constructor for abstract class AdversarySearchEngine 
-	* @pre. true.
-	* @post. This constructor sets maxDepth to 1.
-	*/
+	 * Constructor for abstract class AdversarySearchEngine 
+	 * @pre. true.
+	 * @post. This constructor sets maxDepth to 1.
+	 */
 	public AdversarySearchEngine() {
 		maxDepth = 1;
 	};
-	    
+    
 	/** 
-	* Constructor for abstract class AbstractSearchEngine.
-	* @param p is the abstract search problem associated with the engine
-	* being created.
-	* @pre. p!=null.
-	* @post. A reference to p is stored in field problem and maxDepth
-	* is set to 1.
-	*/	
-	public AdversarySearchEngine(P p) {
-		problem = p;
-		maxDepth = 1;
-	}
-	    
+	 * Constructor for abstract class AbstractSearchEngine.
+	 * @param p is the abstract search problem associated with the engine
+	 * being created.
+	 * @pre. p!=null.
+	 * @post. A reference to p is stored in field problem and maxDepth
+	 * is set to 1.
+	 */	
+    public AdversarySearchEngine(P p) {
+        problem = p;
+        maxDepth = 1;
+    }
+    
 	/** 
-	* Constructor for abstract class AbstractSearchEngine.
-	* @param p is the abstract search problem associated with the engine
-	* being created.
-	* @param maxDepth is a value to set this.maxDepth to.
-	* @pre. p!=null and maxDepth>=1.
-	* @post. A reference to p is stored in field problem and 
-	* this.maxDepth is set to maxDepth.
-	*/	
-	public AdversarySearchEngine(P p, int maxDepth) {
-		problem = p;
-		this.maxDepth = maxDepth;
-	}
-	    
-
+	 * Constructor for abstract class AbstractSearchEngine.
+	 * @param p is the abstract search problem associated with the engine
+	 * being created.
+	 * @param maxDepth is a value to set this.maxDepth to.
+	 * @pre. p!=null and maxDepth>=1.
+	 * @post. A reference to p is stored in field problem and 
+	 * this.maxDepth is set to maxDepth.
+	 */	
+    public AdversarySearchEngine(P p, int maxDepth) {
+        problem = p;
+        this.maxDepth = maxDepth;
+    }
+    
 	/** 
 	 * Returns the maximum depth to be used for search. This value
 	 * indicates how many game moves in the future are going to be
@@ -130,6 +129,5 @@ public abstract class AdversarySearchEngine<P extends AdversarySearchProblem<S>,
 	 */
     abstract public void report();
 	
-
-	
 }
+

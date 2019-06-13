@@ -1,6 +1,15 @@
 package duidoku;
 
-public interface AdversarySearchState {
+/**
+ * Interface which defines the basic requirements on states, needed 
+ * when characterising problems as adversary search problems. State 
+ * definitions for particular adversary search problems should 
+ * implement this interface, so that general adversary search 
+ * strategies can be used.
+ * @author Nazareno Aguirre
+ * @version 0.1, 17/05/2010
+ */
+public interface AdversarySearchState extends State{
 
 	/** 
 	 * Indicates whether the current state is a max state or not.
@@ -45,3 +54,4 @@ public interface AdversarySearchState {
 	abstract Object ruleApplied();
 	
 }
+

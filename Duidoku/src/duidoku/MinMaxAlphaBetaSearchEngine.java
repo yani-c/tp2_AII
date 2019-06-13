@@ -8,7 +8,7 @@ public class MinMaxAlphaBetaSearchEngine <P extends AdversarySearchProblem<S>, S
 
 
     private S nextMove;
-    private int depth; //comento o no?
+    private int depth;
 
     /**
      * Constructor por defecto
