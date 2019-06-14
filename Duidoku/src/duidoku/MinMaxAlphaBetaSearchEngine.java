@@ -96,7 +96,8 @@ public class MinMaxAlphaBetaSearchEngine <P extends AdversarySearchProblem<S>, S
                     result = successor;
                     resultValue = successorValue;
                 }
-            } else {
+            } 
+            else {
             	//dejar jugar
             	int r;
             	S s= state;
@@ -105,23 +106,25 @@ public class MinMaxAlphaBetaSearchEngine <P extends AdversarySearchProblem<S>, S
             		System.out.println(toStringBoard(s));//HACERLO ESTATICO
             		//dejar que ingrese
             		System.out.println("Ingrese posicion fila");
-            		int fila=;
+            		int fila=0;
             		System.out.println("Ingrese posicion columna");
             		int columna;
             		System.out.println("Puede ingresar: ");
             		System.out.println(s.getOptions(fila, columna));//no me va a dejar
             		System.out.println("Ingresar: ");
-            		int ingreso=;
+            		int ingreso=0;
             		s.getBoard()[fila][columna].setFst(false);
             		s.getBoard()[fila][columna].setSnd(ingreso);
             		s.setMax(true); //agregar para que me deje
             		result=s;
+            	}
             }
-        }//endfor
+        }
         nextMove = result;
         report();
         return result;
     }
+   
 
     @Override
     public void report() {

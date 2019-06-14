@@ -29,7 +29,7 @@ public class DuidokuProblem implements AdversarySearchProblem<DuidokuState> {
 				b[i][j]=new Casilla(true,0);
 			}
 		}
-		boolean m=false;
+		boolean m=true;
 		DuidokuState d= new DuidokuState(b,m);
 		return d;
 	}
@@ -44,7 +44,7 @@ public class DuidokuProblem implements AdversarySearchProblem<DuidokuState> {
 					if(!opciones.isEmpty()) {
 						for(Integer k: opciones) {
 							DuidokuState s= state;
-							s.getBoard()[i][j]= new Casilla(!state.isMax(),k);
+							s.getBoard()[i][j]= new Casilla(false,k);
 							successors.add(s);
 						}
 					}

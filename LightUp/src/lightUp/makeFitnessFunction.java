@@ -8,11 +8,17 @@ public class makeFitnessFunction extends FitnessFunction{
 	
 	
 	private final Casilla[][] board;
-
+	/**
+ 	* Initialize the atribute of the class with a given board.
+ 	* @param board The board given.
+ 	*/
     public makeFitnessFunction(Casilla[][] board){
         this.board=board;
     }
-
+    /**
+     *Our fitness function(evaluates a given chromosome).
+     * @param c The chromosome to evaluate.
+     */
 	@Override
 	protected double evaluate(IChromosome c) {
 		int cantFocos = getCantFocos(c);
@@ -20,7 +26,11 @@ public class makeFitnessFunction extends FitnessFunction{
 		int cantConflictos= getCantConflictos(c);
 		return ((cantIluminadas+0.0)/(0.0+cantConflictos + 1)+(1.0/(cantFocos+0.0)));
 	}
-	
+	/**
+	 * 
+	 * @param c The given chromosome.
+	 * @return
+	 */
 	public int getCantFocos(IChromosome c){
 		int focos =0;
 		for(Gene g : c.getGenes()) {
@@ -107,11 +117,11 @@ public class makeFitnessFunction extends FitnessFunction{
 			for(int j=0;j<7;j++) {
 				if(board[i][j].getFst()) {
 					boardAux[i][j]= new Casilla(true,(Integer) c.getGene(k).getAllele());
+					k++;
 				}
 				else {
 					boardAux[i][j]=board[i][j];
 				}
-				k++;
 			}
 		}
 		return boardAux;

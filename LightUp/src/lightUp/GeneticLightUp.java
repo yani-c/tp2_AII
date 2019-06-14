@@ -40,7 +40,7 @@ public class GeneticLightUp{
 		  conf.setKeepPopulationSizeConstant(false);
 		  makeFitnessFunction myFunc = new makeFitnessFunction(board);
 		  conf.setFitnessFunction(myFunc);
-		  Gene[] sampleGenes = new Gene[49];
+		  Gene[] sampleGenes = new Gene[cantWhite(board)];
 		  for(int i=0;i<sampleGenes.length;i++) {
 		  sampleGenes[i]= new IntegerGene(conf,0,1);
 		  }
@@ -67,7 +67,7 @@ public class GeneticLightUp{
 		  }
 		  if(bestSolutionSoFar.getFitnessValue() >= cantWhite(board)){
 			  System.out.println("Solution found, improving...");
-			  for(int l = 0; l<1000;l++) {
+			  for(int l = 0; l<1500;l++) {
 				  poblacion.evolve();
 			  }
 			  System.out.println("Fitness value: "+bestSolutionSoFar.getFitnessValue());
