@@ -13,12 +13,12 @@ public class DuidokuState implements AdversarySearchState {
 	private Object ruleApplied;
 	
 	public DuidokuState() {
-		Casilla[][] b= new Casilla[9][9];
+		board= new Casilla[9][9];
 		ruleApplied=null;
 	}
 	
 	public DuidokuState (boolean m) {
-		Casilla[][] b= new Casilla[9][9];
+		board= new Casilla[9][9];
 		max=m;
 		ruleApplied=null;
 	}
