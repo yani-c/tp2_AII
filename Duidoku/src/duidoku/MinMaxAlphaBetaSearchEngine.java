@@ -43,7 +43,7 @@ public class MinMaxAlphaBetaSearchEngine <P extends AdversarySearchProblem<S>, S
      */
     @Override
     public int computeValue(S state) {
-        return minMaxAlphaBeta(state, problem.minValue(), problem.maxValue(), maxDepth);
+    	return minMaxAlphaBeta(state, problem.minValue(), problem.maxValue(), maxDepth);
     }
 
     /**
@@ -97,13 +97,29 @@ public class MinMaxAlphaBetaSearchEngine <P extends AdversarySearchProblem<S>, S
                     resultValue = successorValue;
                 }
             } else {
-                if (resultValue > successorValue) {
-                    result = successor;
-                    resultValue = successorValue;
-                }
+            	//dejar jugar
+            	int r;
+            	S s= state;
+            	if(!state.isMax()) {
+            		//mostrar tablero
+            		System.out.println(toStringBoard(s));//HACERLO ESTATICO
+            		//dejar que ingrese
+            		System.out.println("Ingrese posicion fila");
+            		int fila=;
+            		System.out.println("Ingrese posicion columna");
+            		int columna;
+            		System.out.println("Puede ingresar: ");
+            		System.out.println(s.getOptions(fila, columna));//no me va a dejar
+            		System.out.println("Ingresar: ");
+            		int ingreso=;
+            		s.getBoard()[fila][columna].setFst(false);
+            		s.getBoard()[fila][columna].setSnd(ingreso);
+            		s.setMax(true); //agregar para que me deje
+            		result=s;
             }
         }//endfor
         nextMove = result;
+        report();
         return result;
     }
 
