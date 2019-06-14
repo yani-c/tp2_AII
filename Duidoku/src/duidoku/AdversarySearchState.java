@@ -20,16 +20,13 @@ public interface AdversarySearchState extends State{
 	 * @post. true is returned iff 'this' is a max state.
 	 */
 	abstract boolean isMax();
-
-	/** 
-	 * Checks whether 'this' is equal to another state. 
-	 * @param other is the state to compare 'this' to.
-	 * @return true iff 'this' is equal, as a state, to 'other'.
-	 * @pre. other!=null.
-	 * @post. true is returned iff 'this' is equal, as a state, 
-	 * to 'other'.
+	
+	/*
+	 * 
 	 */
-	abstract public boolean equals(AdversarySearchState other);
+	abstract void setMax(boolean m);
+
+
 
 	/** 
 	 * Returns a representation as a string of the current state. 

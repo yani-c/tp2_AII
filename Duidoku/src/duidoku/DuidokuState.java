@@ -35,6 +35,23 @@ public class DuidokuState implements AdversarySearchState {
 		ruleApplied=r;
 	}
 	
+	public DuidokuState(DuidokuState d) {
+		board= new Casilla[9][9];
+		for(int i=0;i<9;i++) {
+			for(int j=0;j<9;j++) {
+				board[i][j]= new Casilla(d.getBoard()[i][j].getFst(),d.getBoard()[i][j].getSnd());
+			}
+		}
+		max=d.isMax();
+	}
+	
+	public String toString() {
+		String m;
+		m= toStringBoard();
+		m=m+"\n"+max;
+		return m;
+	}
+	
 	public Casilla[][] getBoard(){
 		return board;
 	}
@@ -70,11 +87,6 @@ public class DuidokuState implements AdversarySearchState {
 		return max;
 	}
 
-	@Override
-	public boolean equals(AdversarySearchState other) {
-		//PROBAR						
-		return other.equals(other);
-	}
 
 	@Override
 	public Object ruleApplied() {
@@ -99,8 +111,13 @@ public class DuidokuState implements AdversarySearchState {
 		int cant=0;
 		for(int i=0;i<9;i++) {
 			for(int j=0;j<9;j++) {
-				if((!board[i][j].getFst())&&board[i][j].getSnd()==-1) {
-					cant++;
+				if(board[i][j].getFst()) {
+					List<Integer> list= getOptions(i,j);
+					if(list.isEmpty()) {
+						cant++;
+						board[i][j].setFst(false);
+						board[i][j].setSnd(-1);
+					}
 				}
 			}
 		}
@@ -122,13 +139,13 @@ public class DuidokuState implements AdversarySearchState {
 	public Set<Integer> getOptionsRow(int i,int j){
 		Set<Integer> estan= new HashSet<Integer>();
 		for(int k=0;k<9;k++){
-			if(board[k][j].getFst() && board[k][j].getSnd()!=0) {
-				estan.add(board[k][j].getSnd());
+			if(!board[i][k].getFst() && board[i][k].getSnd()!=0) {
+				estan.add(board[i][k].getSnd());
 			}
 		}
 		Set<Integer> opciones= new HashSet<Integer>();
 		for(int m=1;m<10;m++) {
-			opciones.add(i);
+			opciones.add(m);
 		}
 		//borro las que ya estan en la fila
 		opciones.removeAll(estan);
@@ -138,13 +155,13 @@ public class DuidokuState implements AdversarySearchState {
 	public Set<Integer> getOptionsColumn(int i,int j){
 		Set<Integer> estan= new HashSet<Integer>();
 		for(int k=0;k<9;k++){
-			if(board[i][k].getFst() && board[j][k].getSnd()!=0) {
-				estan.add(board[j][k].getSnd());
+			if(!board[k][j].getFst() && board[k][j].getSnd()!=0) {
+				estan.add(board[k][j].getSnd());
 			}
 		}
 		Set<Integer> opciones= new HashSet<Integer>();
 		for(int m=1;m<10;m++) {
-			opciones.add(i);
+			opciones.add(m);
 		}
 		//borro las que ya estan en la fila
 		opciones.removeAll(estan);
@@ -157,18 +174,35 @@ public class DuidokuState implements AdversarySearchState {
 		Set<Integer> estan= new HashSet<Integer>();
 		for(int k=desdeFila;k<desdeFila+3;k++) {
 			for(int m=desdeColumna;m<desdeColumna+3;m++) {
-				if(board[k][m].getFst() && board[k][m].getSnd()!=0) {
+				if(!board[k][m].getFst() && board[k][m].getSnd()!=0) {
 					estan.add(board[k][m].getSnd());
 				}
 			}
 		}
 		Set<Integer> opciones= new HashSet<Integer>();
 		for(int m=1;m<10;m++) {
-			opciones.add(i);
+			opciones.add(m);
 		}
 		//borro las que ya estan en la fila
 		opciones.removeAll(estan);
 		return opciones;
 	}
+
+	@Override
+	public void setMax(boolean m) {
+		max=m;
+	}
 	
+	public boolean equals(DuidokuState s) {
+		boolean e=true;
+		for(int i=0;i<9 && e;i++) {
+			for(int j=0;j<9 && e;j++) {
+				if(!board[i][j].equals(s.getBoard()[i][j])) {
+					e=false;
+				}
+			}
+		}
+		e= e && (this.max==s.isMax());
+		return e;
+	}
 }

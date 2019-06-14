@@ -10,7 +10,7 @@ public class DuidokuProblem implements AdversarySearchProblem<DuidokuState> {
     private final int maxValue;
 	
 	public DuidokuProblem() {
-		initial= new DuidokuState();
+		initial= new DuidokuState(false);
 		minValue=Integer.MIN_VALUE;
 		maxValue=Integer.MAX_VALUE;
 	}
@@ -29,22 +29,23 @@ public class DuidokuProblem implements AdversarySearchProblem<DuidokuState> {
 				b[i][j]=new Casilla(true,0);
 			}
 		}
-		boolean m=true;
+		boolean m=false;
 		DuidokuState d= new DuidokuState(b,m);
 		return d;
 	}
 
 	@Override
 	public List<DuidokuState> getSuccessors(DuidokuState state) {
-		List<DuidokuState> successors = new LinkedList();
+		List<DuidokuState> successors = new LinkedList<DuidokuState>();
 		for(int i=0;i<9;i++) {
 			for(int j=0;j<9;j++) {
 				if(state.getBoard()[i][j].getFst()) {
 					List<Integer> opciones= state.getOptions(i, j);
 					if(!opciones.isEmpty()) {
 						for(Integer k: opciones) {
-							DuidokuState s= state;
+							DuidokuState s= new DuidokuState(state);
 							s.getBoard()[i][j]= new Casilla(false,k);
+							s.setMax(!state.isMax());
 							successors.add(s);
 						}
 					}
@@ -79,7 +80,7 @@ public class DuidokuProblem implements AdversarySearchProblem<DuidokuState> {
 		}
 		else {
 			//si ya voy avanzado en el juego
-			if(state.cantCasillasLibres()>40) {
+			if(state.cantCasillasLibres()<50) {
 				v= ((state.cantCasillasLibres()+1) % 2)+ state.cantConflictos();
 			}
 			else {
