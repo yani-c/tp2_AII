@@ -3,13 +3,15 @@ package lightUp;
 import org.jgap.*;
 import org.jgap.impl.*;
 
+import vista.PantallaPrincipal;
+
 public class GeneticLightUp{
 
 	
 	  private static final int MAX_ALLOWED_EVOLUTIONS = 6000;
 	  
 	  public static void main(String[] args) throws Exception {
-			Casilla blanca= new Casilla(true,0);
+			/*Casilla blanca= new Casilla(true,0);
 			Casilla[][] aux={
 				{blanca,blanca,new Casilla(false,-1),blanca,blanca,blanca,blanca,},
 				{blanca,new Casilla(false,-1),blanca,blanca,blanca,new Casilla(false,4),blanca},
@@ -19,7 +21,9 @@ public class GeneticLightUp{
 				{blanca,new Casilla(false,3),blanca,blanca,blanca,new Casilla(false,2),blanca},
 				{new Casilla(false,-1),blanca,blanca,blanca,new Casilla(false,-1),blanca,blanca}};
 			//poner a definition en un while, mientras no sea 37 o llegue a cierta cantidad de iteraciones
-			definition(aux);
+			definition(aux);*/
+		  PantallaPrincipal p= new PantallaPrincipal();
+		  
 	  }
 	  
 	  public static int cantWhite(Casilla[][] board) {
@@ -34,7 +38,8 @@ public class GeneticLightUp{
 		  return cant;
 	  }
 	  
-	  public static void definition(Casilla[][] board) throws Exception {
+	  public static Casilla[][] definition(Casilla[][] board) throws Exception {
+		  Configuration.reset();
 		  Configuration conf = new DefaultConfiguration();
 		  conf.setPreservFittestIndividual(true);
 		  conf.setKeepPopulationSizeConstant(false);
@@ -71,11 +76,11 @@ public class GeneticLightUp{
 				  poblacion.evolve();
 			  }
 			  System.out.println("Fitness value: "+bestSolutionSoFar.getFitnessValue());
-			  Casilla[][] tablerito= myFunc.completeBoard(bestSolutionSoFar);
-			  System.out.println(getTablero(tablerito));  
+			  return myFunc.completeBoard(bestSolutionSoFar);
 		  }
 		  else {
-			  System.out.println("No se encontro solucion :(");
+			  System.out.println("Fitness value: "+bestSolutionSoFar.getFitnessValue());
+			  return myFunc.completeBoard(bestSolutionSoFar);
 		  }
 	  }
 	  

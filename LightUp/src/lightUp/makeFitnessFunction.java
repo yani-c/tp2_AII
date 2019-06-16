@@ -63,8 +63,22 @@ public class makeFitnessFunction extends FitnessFunction{
 		}
 		return cant;
 	}
+	public static boolean estaIluminada(int fila,int columna,Casilla[][] c) {
+		Boolean[][] iluminadas= new Boolean[7][7];
+		inicializarTablero(iluminadas);
+		for(int i=0;i<7;i++) {
+			for(int j=0;j<7;j++) {
+				//si es una casilla blanca y tiene foco
+				if((c[i][j].getFst()) && (c[i][j].getSnd()>0)) {
+					//iluminamos tablero
+					iluminarTablero(c,iluminadas,i,j);
+				}
+			}
+		}
+		return iluminadas[fila][columna];
+	}
 	
-	public void inicializarTablero(Boolean[][] iluminadas) {
+	public static void inicializarTablero(Boolean[][] iluminadas) {
 		for(int i=0;i<7;i++) {
 			for(int j=0;j<7;j++) {
 				iluminadas[i][j]=false;
@@ -73,7 +87,7 @@ public class makeFitnessFunction extends FitnessFunction{
 	}
 	
 	
-	public void iluminarTablero(Casilla[][] board, Boolean[][] iluminadas, int i,int j) {
+	public static void iluminarTablero(Casilla[][] board, Boolean[][] iluminadas, int i,int j) {
 		
 		iluminarArriba(board,iluminadas,i,j);
 		iluminarAbajo(board,iluminadas,i,j);
@@ -81,28 +95,28 @@ public class makeFitnessFunction extends FitnessFunction{
 		iluminarIzquierda(board,iluminadas,i,j);
 	}
 	
-	public void iluminarArriba(Casilla[][] board, Boolean[][] iluminadas, int i,int j) {
+	public static void iluminarArriba(Casilla[][] board, Boolean[][] iluminadas, int i,int j) {
 		while(i>=0 && board[i][j].getFst()) {
 			iluminadas[i][j]=true;
 			i--;
 		}
 	}
 	
-	public void iluminarAbajo(Casilla[][] board, Boolean[][] iluminadas, int i,int j) {
+	public static void iluminarAbajo(Casilla[][] board, Boolean[][] iluminadas, int i,int j) {
 		while(i<7 && board[i][j].getFst()) {
 			iluminadas[i][j]=true;
 			i++;
 		}
 	}
 	
-	public void iluminarDerecha(Casilla[][] board, Boolean[][] iluminadas, int i,int j) {
+	public static void iluminarDerecha(Casilla[][] board, Boolean[][] iluminadas, int i,int j) {
 		while(j<7 && board[i][j].getFst()) {
 			iluminadas[i][j]=true;
 			j++;
 		}
 	}
 	
-	public void iluminarIzquierda(Casilla[][] board, Boolean[][] iluminadas, int i,int j) {
+	public static void iluminarIzquierda(Casilla[][] board, Boolean[][] iluminadas, int i,int j) {
 		while(j>=0 && board[i][j].getFst()) {
 			iluminadas[i][j]=true;
 			j--;
