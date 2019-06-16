@@ -2,6 +2,7 @@ package vista;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +14,9 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 import lightUp.Casilla;
 import lightUp.GeneticLightUp;
@@ -25,32 +29,37 @@ public class PantallaPrincipal extends JFrame {
 	private final JFrame frame = new JFrame("Light Up");
     private JButton[][] buttons = new JButton[7][7];
     private ImageIcon atomIcon;
+    private final JPanel menu = new JPanel();
+    private final JPanel casillasNegras = new JPanel();
     private final Container grid = new Container();
-    private final JMenuBar menuBar = new JMenuBar();
-    private final JMenu mainMenu = new JMenu("Menu");
-    private final JMenuItem newGame = new JMenuItem("New Game");
-    private final JMenuItem exit = new JMenuItem("Exit");
-    private final JMenuItem obtenerSolucion = new JMenuItem("Obtener solucion");
+  //  private final JMenu mainMenu = new JMenu("Menu");
+    private final JButton newGame = new JButton("Juego nuevo");
+    private final JButton exit = new JButton("Salir");
+    private final JButton obtenerSolucion = new JButton("Obtener solucion");
 	
-    private final PantallaCasillaNegra casillaNegra= new PantallaCasillaNegra();
-	
+    //private final PantallaCasillaNegra casillaNegra= new PantallaCasillaNegra();
+	private JSpinner s= new JSpinner();
+	private SpinnerNumberModel elegir= new SpinnerNumberModel();
+    
 	public PantallaPrincipal() {
-		
-        mainMenu.add(newGame);
-        mainMenu.add(exit);
-        mainMenu.add(obtenerSolucion);
-        newGame.addActionListener(gameListener);
+		menu.setLayout(new FlowLayout());
+		menu.setBackground(java.awt.Color.pink);
+        menu.add(newGame, FlowLayout.LEFT);
+        menu.add(exit,FlowLayout.CENTER);
+        menu.add(obtenerSolucion,FlowLayout.RIGHT);
+        newGame.addActionListener(newGameListener);
         exit.addActionListener(exitListener);
         obtenerSolucion.addActionListener(solucionListener);
-
-        menuBar.add(mainMenu);
+        
+        //menuBar.add(mainMenu);
         frame.setSize(50*7+4,50*7+48);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setLayout(new BorderLayout());
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(menuBar, BorderLayout.NORTH);
+        frame.add(menu, BorderLayout.NORTH);
+		////////////////////////////7
         grid.setLayout(new GridLayout(7,7));
         for (int i = 0; i < buttons.length; i++) {
             for (int j = 0; j < buttons[0].length; j++) {
@@ -60,13 +69,13 @@ public class PantallaPrincipal extends JFrame {
                 buttons[i][j].setFocusPainted(false);
                 buttons[i][j].addActionListener(gameButtonListener);
                 grid.add(buttons[i][j]);
+              //  frame.add(buttons[i][j]);
                 
             }
         }
-        casillaNegra.setVisible(false);
+        //casillaNegra.setVisible(false);
         grid.setVisible(true);
         frame.add(grid, BorderLayout.CENTER);
-		////////////////////////////7
 	}
 	
 	public void inicializar(Casilla[][] c) {
@@ -77,14 +86,6 @@ public class PantallaPrincipal extends JFrame {
 		}
 	}
 	
-	ActionListener gameListener = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent event) {
-
-    		inicializar(tablero);
-        	refreshWindow();
-        }
-    };
 
 	ActionListener exitListener = new ActionListener() {
         @Override
@@ -97,8 +98,19 @@ public class PantallaPrincipal extends JFrame {
         @Override
         public void actionPerformed(ActionEvent event) {
         	inicializar(tablero);
-            grid.setVisible(true);
-            frame.add(grid, BorderLayout.CENTER);
+            //
+        	casillasNegras.setLayout(new FlowLayout());
+        	JLabel e= new JLabel("Focos");
+            elegir.setMinimum(-1);
+    		elegir.setMaximum(4);
+    		s.setModel(elegir);
+    		casillasNegras.add(e);
+    		casillasNegras.add(s);
+    		casillasNegras.setBackground(java.awt.Color.pink);
+    		//s.setLayout();
+    		s.setVisible(true);
+    		frame.add(casillasNegras, BorderLayout.LINE_END);
+        	//
             refreshWindow();              
         }
     };
@@ -106,8 +118,8 @@ public class PantallaPrincipal extends JFrame {
     ActionListener solucionListener  = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent event) {
-            grid.setVisible(true);
-            frame.add(grid, BorderLayout.CENTER);
+           // grid.setVisible(true);
+      //      frame.add(grid, BorderLayout.CENTER);
             try {
 				tablero= GeneticLightUp.definition(tablero);
 			} catch (Exception e) {
@@ -125,13 +137,14 @@ public class PantallaPrincipal extends JFrame {
             boolean condition = false;
             boolean found = false;
             int x = 0, y = 0, nro=-10;
+    		nro= (Integer) s.getValue();
             for (int i = 0; i < buttons.length && !found; i++) {
                 for (int j = 0; j < buttons[0].length && !found; j++) {
                     found = event.getSource().equals(buttons[i][j]);
                     if (found) {
-                    	casillaNegra.setVisible(true);
-                    	nro=casillaNegra.getValor();
-                    	casillaNegra.setVisible(false);
+                    	//casillaNegra.setVisible(true);
+                    	//nro=casillaNegra.getValor();
+                    	//casillaNegra.setVisible(false);
                     	System.out.println("soy nro "+nro);
                         condition = ((nro > -2) && (nro<5));
                         x = i;
