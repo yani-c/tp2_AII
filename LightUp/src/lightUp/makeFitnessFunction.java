@@ -24,7 +24,7 @@ public class makeFitnessFunction extends FitnessFunction{
 		int cantFocos = getCantFocos(c);
 		int cantIluminadas= getCantIluminadas(c);
 		int cantConflictos= getCantConflictos(c);
-		return ((cantIluminadas+0.0)/(0.0+cantConflictos + 1)+(1.0/(cantFocos+0.0)));
+		return ((cantIluminadas+0.0)/(0.0+cantConflictos + 1)+(1.0/(cantFocos+1.0)));
 	}
 	/**
 	 * 

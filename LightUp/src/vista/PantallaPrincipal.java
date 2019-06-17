@@ -126,7 +126,6 @@ public class PantallaPrincipal extends JFrame {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-            System.out.println(GeneticLightUp.getTablero(tablero));
             refreshWindow();
         }
     };

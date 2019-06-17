@@ -1,7 +1,12 @@
 package lightUp;
 
-import org.jgap.*;
-import org.jgap.impl.*;
+import org.jgap.Chromosome;
+import org.jgap.Configuration;
+import org.jgap.Gene;
+import org.jgap.Genotype;
+import org.jgap.IChromosome;
+import org.jgap.impl.DefaultConfiguration;
+import org.jgap.impl.IntegerGene;
 
 import vista.PantallaPrincipal;
 

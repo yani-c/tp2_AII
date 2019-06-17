@@ -1,6 +1,7 @@
 package duidoku;
 
 import java.util.Scanner;
+import graphicInterface.View;
 
 public class AppDuidoku {
 
@@ -23,6 +24,8 @@ public class AppDuidoku {
 	    			s.setMax(false);
 	    	}
 	    	else {
+	    		View view = new View(s);
+	    		s =view.draw();
 	       		//mostrar tablero
 	       		System.out.println(s.toStringBoard());
 	       		//dejar que ingrese
