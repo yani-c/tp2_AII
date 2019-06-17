@@ -4,7 +4,6 @@ import org.jgap.*;
 
 public class makeFitnessFunction extends FitnessFunction{
 
-	//private static final long serialVersionUID = a;
 	
 	
 	private final Casilla[][] board;
@@ -144,13 +143,12 @@ public class makeFitnessFunction extends FitnessFunction{
 	
 	public int getCantConflictos(IChromosome c) {
 		Casilla[][] aux= completeBoard(c);
-	//	System.out.println(GeneticLightUp.getTablero(aux));
 		int cant= conflictosLugar(aux);
 		cant=cant+conflictosCasillasNegras(aux);
 		return cant;
 	}
 	
-	public int conflictosLugar(Casilla[][] aux) {
+	public static int conflictosLugar(Casilla[][] aux) {
 		int conflictos=0;
 		//miro las filas
 		for(int i=0;i<7;i++) {
@@ -188,11 +186,11 @@ public class makeFitnessFunction extends FitnessFunction{
 		return conflictos;
 	}
 	
-	public int conflictosCasillasNegras(Casilla[][] aux) {
+	public static int conflictosCasillasNegras(Casilla[][] aux) {
 		int conflictos=0;
 		for(int i=0;i<7;i++) {
 			for(int j=0;j<7;j++) {
-				if(!aux[i][j].getFst() && aux[i][j].getSnd()>0) {
+				if(!aux[i][j].getFst() && aux[i][j].getSnd()>=0) {
 					int focos=0;
 					//miro arriba de la casilla, si es que se puede
 					if(i-1>=0 && aux[i-1][j].getFst() && aux[i-1][j].getSnd()==1) {
@@ -227,7 +225,6 @@ public class makeFitnessFunction extends FitnessFunction{
 				}
 			}
 		}
-//		System.out.println("NEGRAS "+conflictos);
 		return conflictos;
 	}
 	

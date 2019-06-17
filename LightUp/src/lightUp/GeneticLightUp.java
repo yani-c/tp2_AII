@@ -16,17 +16,6 @@ public class GeneticLightUp{
 	  private static final int MAX_ALLOWED_EVOLUTIONS = 6000;
 	  
 	  public static void main(String[] args) throws Exception {
-			/*Casilla blanca= new Casilla(true,0);
-			Casilla[][] aux={
-				{blanca,blanca,new Casilla(false,-1),blanca,blanca,blanca,blanca,},
-				{blanca,new Casilla(false,-1),blanca,blanca,blanca,new Casilla(false,4),blanca},
-				{blanca,blanca,blanca,new Casilla(false,-1),blanca,blanca,new Casilla(false,-1)},
-				{blanca,blanca,new Casilla(false,1),blanca,new Casilla(false,-1),blanca,blanca},
-				{new Casilla(false,-1),blanca,blanca,new Casilla(false,3),blanca,blanca,blanca},
-				{blanca,new Casilla(false,3),blanca,blanca,blanca,new Casilla(false,2),blanca},
-				{new Casilla(false,-1),blanca,blanca,blanca,new Casilla(false,-1),blanca,blanca}};
-			//poner a definition en un while, mientras no sea 37 o llegue a cierta cantidad de iteraciones
-			definition(aux);*/
 		  PantallaPrincipal p= new PantallaPrincipal();
 		  
 	  }
@@ -52,20 +41,11 @@ public class GeneticLightUp{
 		  conf.setFitnessFunction(myFunc);
 		  Gene[] sampleGenes = new Gene[cantWhite(board)];
 		  for(int i=0;i<sampleGenes.length;i++) {
-		  sampleGenes[i]= new IntegerGene(conf,0,1);
+			  sampleGenes[i]= new IntegerGene(conf,0,1);
 		  }
 		  IChromosome sampleChromosome = new Chromosome(conf, sampleGenes);
 		  conf.setSampleChromosome(sampleChromosome);
 		  conf.setPopulationSize(100);
-		 /* IChromosome[] cromosomas = new IChromosome[conf.getPopulationSize()];
-		  Gene[] muestra_genes = sampleChromosome.getGenes();
-	      for (int i = 0; i < cromosomas.length; i++) {
-	    	  Gene[] genes = new Gene[muestra_genes.length];
-	    	  for (int k = 0; k < genes.length; k++) {
-	    		  genes[k] = new IntegerGene(conf,0,1);
-	    	  }
-	    	  cromosomas[i] = new Chromosome(conf, genes);
-	      }*/
 		  IChromosome bestSolutionSoFar = null ;
 		  Genotype poblacion = Genotype.randomInitialGenotype(conf);
 		  for (int i = 0; i < MAX_ALLOWED_EVOLUTIONS; i++) {
@@ -80,13 +60,9 @@ public class GeneticLightUp{
 			  for(int l = 0; l<1500;l++) {
 				  poblacion.evolve();
 			  }
-			  System.out.println("Fitness value: "+bestSolutionSoFar.getFitnessValue());
-			  return myFunc.completeBoard(bestSolutionSoFar);
 		  }
-		  else {
-			  System.out.println("Fitness value: "+bestSolutionSoFar.getFitnessValue());
-			  return myFunc.completeBoard(bestSolutionSoFar);
-		  }
+		  System.out.println("Fitness value: "+bestSolutionSoFar.getFitnessValue());
+		  return myFunc.completeBoard(bestSolutionSoFar);
 	  }
 	  
 	  public static String getTablero(Casilla[][] board) {

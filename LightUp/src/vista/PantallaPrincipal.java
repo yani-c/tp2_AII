@@ -11,9 +11,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
@@ -32,12 +29,10 @@ public class PantallaPrincipal extends JFrame {
     private final JPanel menu = new JPanel();
     private final JPanel casillasNegras = new JPanel();
     private final Container grid = new Container();
-  //  private final JMenu mainMenu = new JMenu("Menu");
     private final JButton newGame = new JButton("Juego nuevo");
     private final JButton exit = new JButton("Salir");
     private final JButton obtenerSolucion = new JButton("Obtener solucion");
 	
-    //private final PantallaCasillaNegra casillaNegra= new PantallaCasillaNegra();
 	private JSpinner s= new JSpinner();
 	private SpinnerNumberModel elegir= new SpinnerNumberModel();
     
@@ -50,8 +45,7 @@ public class PantallaPrincipal extends JFrame {
         newGame.addActionListener(newGameListener);
         exit.addActionListener(exitListener);
         obtenerSolucion.addActionListener(solucionListener);
-        
-        //menuBar.add(mainMenu);
+
         frame.setSize(50*7+4,50*7+48);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
@@ -69,11 +63,9 @@ public class PantallaPrincipal extends JFrame {
                 buttons[i][j].setFocusPainted(false);
                 buttons[i][j].addActionListener(gameButtonListener);
                 grid.add(buttons[i][j]);
-              //  frame.add(buttons[i][j]);
                 
             }
         }
-        //casillaNegra.setVisible(false);
         grid.setVisible(true);
         frame.add(grid, BorderLayout.CENTER);
 	}
@@ -107,7 +99,6 @@ public class PantallaPrincipal extends JFrame {
     		casillasNegras.add(e);
     		casillasNegras.add(s);
     		casillasNegras.setBackground(java.awt.Color.pink);
-    		//s.setLayout();
     		s.setVisible(true);
     		frame.add(casillasNegras, BorderLayout.LINE_END);
         	//
@@ -118,12 +109,9 @@ public class PantallaPrincipal extends JFrame {
     ActionListener solucionListener  = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent event) {
-           // grid.setVisible(true);
-      //      frame.add(grid, BorderLayout.CENTER);
             try {
 				tablero= GeneticLightUp.definition(tablero);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
             refreshWindow();
@@ -141,10 +129,6 @@ public class PantallaPrincipal extends JFrame {
                 for (int j = 0; j < buttons[0].length && !found; j++) {
                     found = event.getSource().equals(buttons[i][j]);
                     if (found) {
-                    	//casillaNegra.setVisible(true);
-                    	//nro=casillaNegra.getValor();
-                    	//casillaNegra.setVisible(false);
-                    	System.out.println("soy nro "+nro);
                         condition = ((nro > -2) && (nro<5));
                         x = i;
                         y = j;
@@ -152,26 +136,20 @@ public class PantallaPrincipal extends JFrame {
                 }
             }
             if (condition) {
-            	System.out.println("soy "+tablero[x][y].getFst());
                 tablero[x][y].setFst(false);
                 tablero[x][y].setSnd(nro);
                 refreshWindow();
-                //ver si ta creo
                 }
             }//endif
         };//endMethod
 
     
     public void refreshWindow() {
-    	JLabel label = new JLabel();
-    	label.setIcon(new ImageIcon("src/imagenes/foco.png"));
-    	System.out.println("como "+tablero[0][0].getFst());
         for (int i = 0; i < buttons.length; i++) {
             for (int j = 0; j < buttons[0].length; j++) {
                 int aux = tablero[i][j].getSnd();
                 if(tablero[i][j].getFst()) {
                 	if (aux == 1) {
-                		//System.out.println("tendria que poner foco");
 	                    atomIcon = new ImageIcon("src/imagenes/foco.png");
 	                    ImageIcon iconoEscala = new ImageIcon(atomIcon.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_DEFAULT));
                         buttons[i][j].setIcon(iconoEscala);
