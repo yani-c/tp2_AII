@@ -116,6 +116,41 @@ public class GeneticLightUp{
 		  		return a;
 	  }
 	  
+	  /**
+	   * inserta una casilla negra en b en la posicion (fila,columna) con nro, si es que se puede
+	   * @param fila : fila de b donde se desea insertar la casilla negra : int 
+	   * @param columna : columna de b donde se desea insertar la casilla negra : int
+	   * @param nro : restriccion que se le desea poner a la casilla negra : int
+	   * @param b : tablero donde se desea insertar la casilla negra : Casilla[][]
+	   * @return valor de verdad correspondiende a si se pudo o no insertar la casilla negra : boolean
+	   */
+	  public static boolean cargarCasillaNegra(int fila, int columna, int nro,Casilla[][] b) {
+			if(b[fila][columna].getFst()){
+				int cant=0;
+				//si puedo moverme para arriba, y la de arriba es una casilla blanca 
+				if(fila-1>=0 && b[fila-1][columna].getFst()) {
+					cant++;
+				}
+				//si puedo moverme para abajo, y la de abajoa es una casilla blanca 
+				if(fila+1<7 && b[fila+1][columna].getFst()) {
+					cant++;
+				}
+				//si puedo moverme para la derecha, y esa es una casilla blanca 
+				if(columna+1<7 && b[fila][columna+1].getFst()) {
+					cant++;
+				}
+				//si puedo moverme para la izquierda, y esa es una casilla blanca 
+				if(columna-1>=0 && b[fila][columna-1].getFst()) {
+					cant++;
+				}
+				//si llas casillas blancas que tiene al rededor no son los que pide
+				if((cant>0 && nro==-1) || (cant>=nro && nro!=-1)) {
+					b[fila][columna].setFst(false);
+					b[fila][columna].setSnd(nro);
+					return true;
+				}	
+			}
+			return false;
+	  }
 	  
-	
 }

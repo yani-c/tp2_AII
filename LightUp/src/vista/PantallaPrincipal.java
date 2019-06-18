@@ -176,8 +176,10 @@ public class PantallaPrincipal extends JFrame {
                 }
             }
             if(found) {
-		         tablero[x][y].setFst(false);//pongo casilla negra
-		         tablero[x][y].setSnd(nro);//con el valor seleccionado en el spinner
+		         boolean b= GeneticLightUp.cargarCasillaNegra(x,y,nro,tablero);
+		         if(!b) {//si no pudo poner las casilla tiro un mensaje
+		        	 JOptionPane.showMessageDialog(null, "Es imposible generar un tablero con esa casilla");
+		         }
 		         refreshWindow();
             }//endif
         }
