@@ -14,23 +14,16 @@ import org.jgap.impl.DefaultConfiguration;
 import org.jgap.impl.IntegerGene;
 import org.junit.Test;
 
+/**
+ * Clase para testear los metodos de makeFitnessFunciton 
+ */
 public class makeFitnessFunctionTest {
 
-	/*  PARA TABLERO BASICO
-	Casilla blanca= new Casilla(true,0);
-	Casilla[][] aux={
-		{blanca,blanca,new Casilla(false,-1),blanca,blanca,blanca,blanca,},
-		{blanca,new Casilla(false,-1),blanca,blanca,blanca,new Casilla(false,4),blanca},
-		{blanca,blanca,blanca,new Casilla(false,-1),blanca,blanca,new Casilla(false,-1)},
-		{blanca,blanca,new Casilla(false,1),blanca,new Casilla(false,-1),blanca,blanca},
-		{new Casilla(false,-1),blanca,blanca,new Casilla(false,3),blanca,blanca,blanca},
-		{blanca,new Casilla(false,3),blanca,blanca,blanca,new Casilla(false,2),blanca},
-		{blanca,blanca,blanca,blanca,new Casilla(false,-1),blanca,blanca}
-	};
-	 */
-	
+/**
+ * se testea el metodo "evaluate" 
+ */
 	@Test
-	public void testEvaluateIChromosome() throws InvalidConfigurationException {
+	public void testEvaluate() throws InvalidConfigurationException {
 		Casilla blanca= new Casilla(true,0);
 		Casilla iluminada=new Casilla(true,1);
 		Casilla[][] board={
@@ -73,6 +66,9 @@ public class makeFitnessFunctionTest {
 		  System.out.println("Fitness value: "+bestSolutionSoFar.getFitnessValue());
 	}
 
+	/**
+	 * se testea el metodo "estaIluminada"
+	 */
 	@Test
 	public void testestaIluminada() throws InvalidConfigurationException {
 		Casilla[][] board={
@@ -89,6 +85,9 @@ public class makeFitnessFunctionTest {
 
 
 
+	/**
+	 * se testea el metodo "conflictosCasillasNegras"
+	 */
 	@Test
 	public void testConflictosCasillasNegras() throws InvalidConfigurationException {
 		Casilla[][] board={
@@ -103,6 +102,9 @@ public class makeFitnessFunctionTest {
 		assertEquals(1,makeFitnessFunction.conflictosCasillasNegras(board));
 	}
 
+	/**
+	 * se testea el metodo "conflictosLugar"
+	 */
 	@Test
 	public void testConflictosLugar() throws InvalidConfigurationException {
 		Casilla[][] board={
