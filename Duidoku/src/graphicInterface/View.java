@@ -1,21 +1,45 @@
 package graphicInterface;
-
-import duidoku.DuidokuState;
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.*;
+import duidoku.DuidokuProblem;
+import duidoku.DuidokuState;
+import duidoku.MinMaxAlphaBetaSearchEngine;
+
+
 
 public class View {
-	DuidokuState s;
-    JButton[][] grid; 
-	Container cont;
-    
-    public View(DuidokuState st) {
+	private DuidokuState s;
+    private JButton[][] grid; 
+	private Container cont;
+	private JFrame frame;
+	private JFrame f;
+	private MinMaxAlphaBetaSearchEngine<DuidokuProblem, DuidokuState> engine;
+	
+    public View(DuidokuState st,MinMaxAlphaBetaSearchEngine<DuidokuProblem, DuidokuState> e) {
+    	engine = e;
+    	engine.setDepth(0);
     	s = new DuidokuState(st);
     	grid = new JButton[9][9];
+    }
+	
+    public JFrame getFrame() {
+    	return frame;
+    }
+    
+    public JFrame getOptionFrame() {
+    	return f;
+    }
+    
+    public void setState(DuidokuState st) {
+    	s = st;
+    }
+    
+	public void draw() {
+		frame = new JFrame("Duidoku");
 		cont = new Container();
 		cont.setLayout(new GridLayout(9,9));
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(70*9+4,70*9+48);
 		Font font1 = new Font("SansSerif", Font.BOLD, 30);
 	    for(int i=0; i<9; i++) {
 	    	for (int j=0;j<9;j++) {
@@ -24,56 +48,40 @@ public class View {
 	    		grid[i][j].setOpaque(true);
 	    		if(s.getBoard()[i][j].getFst()) {
 	    			grid[i][j].setBackground(java.awt.Color.white);
+		    		GameButtonListener gameButtonListener = new GameButtonListener(grid,this);
+		    		grid[i][j].addActionListener(gameButtonListener);
 	    		}
 	    		else {
-	    			grid[i][j].setBackground(java.awt.Color.gray);
+	    			if(s.getBoard()[i][j].getSnd() ==-1) {
+	    				grid[i][j].setBackground(java.awt.Color.darkGray);
+	    			}
+	    			else {
+	    				grid[i][j].setText(s.getBoard()[i][j].getSnd().toString());
+	    			}
 	    		}
-	    		grid[i][j].addActionListener(gameButtonListener);
+                grid[i][j].setFocusPainted(false);
 	            cont.add(grid[i][j]);
 	    	}
 	    }
-    }
-	
-	public DuidokuState draw() {
-		JFrame frame = new JFrame("Duidoku");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(50*9+4,50*9+48); 	    	
         frame.add(this.cont, BorderLayout.CENTER);
 	    frame.setVisible(true);
-		return this.s;
 	}
-	
-	
-    
-    ActionListener gameButtonListener = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent event) {
-            boolean condition = false;
-            boolean found = false;
-            int x = 0, y = 0, nro=-10;
-            for (int i = 0; i < 9 && !found; i++) {
-                for (int j = 0; j < 9 && !found; j++) {
-                    found = event.getSource().equals(grid[i][j]);
-                    if (found) {
-                    	//casillaNegra.setVisible(true);
-                    	//nro=casillaNegra.getValor();
-                    	//casillaNegra.setVisible(false);
-                    	System.out.println("soy nro "+i+" "+j);
-                    }
-                }
-            }
-            if (condition) {
-            	System.out.println("soy "+s.getBoard()[x][y].getFst());
-                s.getBoard()[x][y].setFst(false);
-                //tablero[x][y].setSnd(nro);
-              //  refreshWindow();
-                //ver si ta creo
-                }
-            }//endif
-        };//endMethod
-
-    
-	
+	            
+   public void optionScreen(int i,int j) {
+	   JButton[] op = new JButton[s.getOptions(i, j).size()];
+	   Container c = new Container();
+	   c.setLayout(new GridLayout(1,s.getOptions(i, j).size()));
+	   f = new JFrame("Options");
+	   f.setSize(50*s.getOptions(i, j).size(), 70);
+	   for(int k = 0; k < s.getOptions(i, j).size();k++) {
+		   op[k] = new JButton(s.getOptions(i,j).get(k).toString());
+		   OptionListener optionListener = new OptionListener(i,j,s,this,engine);
+		   op[k].addActionListener(optionListener);
+		   c.add(op[k]);
+	   }
+	   f.add(c);
+	   f.setVisible(true);
+   }
 	
 	
 }
