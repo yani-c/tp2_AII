@@ -1,5 +1,9 @@
 package duidoku;
-
+/**
+ * Clase que implementa el algoritmo MinMax con poda alpha-beta
+ * @author Agustin Borda, Yanina Celi
+ * @version 0.1 16/06/2019
+ */
 import java.util.*;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -79,7 +83,8 @@ public class MinMaxAlphaBetaSearchEngine <P extends AdversarySearchProblem<S>, S
     }
 
     /**
-     * Devuelve el mejor estado sucesor de 'state' para min/max
+     * Devuelve el mejor estado sucesor de 'state' para min/max, en caso de haber mas de 1, devuelve uno aleatorio entre los mejores.
+     * @pre state no es hoja
      * @param state es el estado a evaluar
      * @return devuelve un estado sucesor de 'state'
      */
@@ -87,24 +92,47 @@ public class MinMaxAlphaBetaSearchEngine <P extends AdversarySearchProblem<S>, S
     public S computeSuccessor(S state) {
         boolean isMax = state.isMax();
         List<S> successors = this.problem.getSuccessors(state);
-        S result = successors.get(0);
+        ArrayList<S> candidates = new ArrayList<S>();//Creamos una lista de candidatos
+        candidates.add(successors.get(0));//La inicializamos con el primer elemento de los sucesores
         successors.remove(0);
-        int resultValue = this.computeValue(result);
+        int resultValue = this.computeValue(candidates.get(0));//calculamos el valor del primer sucesor
         int successorValue;
         for (S successor : successors) {
             successorValue = this.computeValue(successor);
-            if (isMax) {
+            if (isMax) {/*Si el nodo es max, si tenemos un sucesor con mejor valoracion que los de la lista de candidatos, creamos una nueva lista de candidatos con el sucesor nuevo*/
                 if (resultValue < successorValue) {
-                    result = successor;
+                	candidates = new ArrayList<S>();
+                    candidates.add(successor);
                     resultValue = successorValue;
                 }
-            } 
+                else {
+                	if(resultValue == successorValue) {
+                		candidates.add(successor);/*Si es de la misma valoracion, agregamos el sucesor a los candidatos*/
+                	}
+                }
+            }
+            else {/*Si el nodo es min, si tenemos un sucesor con peor valoracion que los de la lista de candidatos, creamos una nueva lista de candidatos con el sucesor nuevo*/
+                if (resultValue > successorValue) {
+                	candidates = new ArrayList<S>();
+                    candidates.add(successor);
+                    resultValue = successorValue;
+                }
+                else {
+                	if(resultValue == successorValue) {
+                		candidates.add(successor); /*Si es de la misma valoracion, agregamos el sucesor a los candidatos*/
+                	}
+                }            	
+            }
         }
-        nextMove = result;
-        return result;
+        Random r = new Random(candidates.size());
+        int index = r.nextInt(candidates.size());
+        nextMove = candidates.get(index);/*Elegimos un elemento random de la lista de candidatos*/
+        return candidates.get(index);
     }
    
-
+    /**
+     * @deprecated
+     */
     @Override
     public void report() {
         System.out.println("El siguiente estado es: " + this.nextMove.toString());
