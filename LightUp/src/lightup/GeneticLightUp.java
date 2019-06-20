@@ -8,7 +8,6 @@ import org.jgap.IChromosome;
 import org.jgap.impl.DefaultConfiguration;
 import org.jgap.impl.IntegerGene;
 
-import vista.PantallaPrincipal;
 
 /**
  * Clase que define la configuracion y obtiene resultado
@@ -19,11 +18,6 @@ public class GeneticLightUp {
 
   //cantidad maxima de evoluciones
   private static final int MAX_ALLOWED_EVOLUTIONS = 6000;
-
-  //main donde se llama a la interfaz grafica
-  public static void main(String[] args) throws Exception {
-    PantallaPrincipal p = new PantallaPrincipal();
-  }
   
 
 
