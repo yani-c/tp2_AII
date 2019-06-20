@@ -6,7 +6,7 @@ import org.jgap.IChromosome;
 
 /**
  * Clase para definir la fitnness function.
- * @author yani y agus
+ * @author Yanina Celi y Agustin Borda
  */
 public class MakeFitnessFunction extends FitnessFunction {
 
@@ -23,7 +23,11 @@ public class MakeFitnessFunction extends FitnessFunction {
     
   /**
    *Fitness function (evalua un cromosoma).
+   * @pre board != null && c != null
    * @param c : el cromosoma a evaluar : IChromosome
+   * @see getCantFocos
+   * @see getCantIluminadas
+   * @see getCantConflictos
    * @return valor asignado por la funcion fitness : double
   */
   @Override
@@ -37,6 +41,7 @@ public class MakeFitnessFunction extends FitnessFunction {
   /**
    * se ponen los elementos de c en el tablero board 
    * (en las casillas blancas del mismo) y se cuentan la cantidad de focos que hay. 
+   * @pre board != null && c != null
    * @param c : cromosoma a evaluar en la funcion fitness : IChromosome
    * @return cantidad de focos que hay en el cromosoma : int
   */
@@ -51,6 +56,7 @@ public class MakeFitnessFunction extends FitnessFunction {
 
   /**
    * Retorna la cantidad de focos que tiene el tablero b.
+   * @pre board != null && c != null
    * @param b : tablero al que se le va a calcular la cantidad de focos : Casilla[][]
    * @return cantidad de focos que tiene el tablero b : int
    */
@@ -69,7 +75,10 @@ public class MakeFitnessFunction extends FitnessFunction {
   /**
    * Se ponen los elementos de c en el tablero board
    *  (en las casillas blancas del mismo) y se calculan las casilas iluminadas.
+   *  @pre board != null && c != null
    * @param c : cromosoma a evaluar en la funcion fitness : IChromosome
+   * @see inicializarTablero
+   * @see iluminarTablero
    * @return cantidad de casillas iluminadas (focos incluidos) en el tablero board : int
   */
   public int getCantIluminadas(IChromosome c) {
@@ -100,9 +109,12 @@ public class MakeFitnessFunction extends FitnessFunction {
    * se crea una matriz de booleanos, donde se marca con true 
    * las posiciones que en el tablero board estan iluminadas. 
    * luego se informa si la casilla de la posicion (fila,columna) esta iluminada
+   * @pre c != null && 0<=i<7 && 0<=j<7
    * @param fila : fila de c en donde se encuentra la casilla a tratar : int
    * @param columna : columna de c en donde se encuentra la casilla a tratar : int
    * @param c : tablero donde se encuentra la casilla a tratar : Casilla[][]
+   * @see inicializarTablero
+   * @see iluminarTablero
    * @return valor de verdad de que esta iluminada la casilla en (fila,columna) de c : boolean
   */
   public static boolean estaIluminada(int fila,int columna,Casilla[][] c) {
@@ -122,6 +134,7 @@ public class MakeFitnessFunction extends FitnessFunction {
  
   /**
    * inicializa la matriz iluminadas con falso.
+   * @pre true
    * @param iluminadas : matriz a inicializar con "false" : Boolean[][]
   */
   public static void inicializarTablero(Boolean[][] iluminadas) {
@@ -140,6 +153,10 @@ public class MakeFitnessFunction extends FitnessFunction {
    * @param iluminadas : matriz de booleanos a modificar, inicializada en "false" : Boolean[][]
    * @param i : fila de board donde esta el foco : int
    * @param j : columna de board donde esta el foco : int
+   * @see iluminarArriba
+   * @see iluminarAbajo
+   * @see iluminarDerecha
+   * @see iluminarIzquierda
   */
   public static void iluminarTablero(Casilla[][] board, Boolean[][] iluminadas, int i,int j) {
     iluminarArriba(board,iluminadas,i,j);
@@ -240,6 +257,9 @@ public class MakeFitnessFunction extends FitnessFunction {
    * calcula la cantidad de conflictos que hay en board,
    *  si se le agrega el cromosoma c .
    * @param c :  cromosoma a tratar : IChromosome
+   * @see conflictosLugar
+   * @see conflictosCasillasNegras
+   * @see completeBoard
    * @return cantidad de conflictos que hay en board al agregar los elementos de c : int
   */ 
   public int getCantConflictos(IChromosome c) {

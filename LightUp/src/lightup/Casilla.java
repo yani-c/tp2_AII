@@ -2,7 +2,7 @@ package lightup;
 
 /**
  * .
- * @author yani y agus
+ * @author Agustin Borda y Yanina Celi
  */
 public class Casilla {
 

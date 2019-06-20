@@ -13,8 +13,7 @@ import vista.PantallaPrincipal;
 /**
  * Clase que define la configuracion y obtiene resultado
  *  mediante algortimos geneticos.
- * @author yani y agus
- *
+ * @author Yanina Celi y Agustin Borda
  */
 public class GeneticLightUp {
 
@@ -30,6 +29,7 @@ public class GeneticLightUp {
 
   /**
    * metodo para calcular la cantidad de casillas blancas en un tablero.
+   * @pre board != null
    * @param board : tablero al que se le va a calcular cantWhite : Casilla[][]
    * @return cantidad de casillas blancas que hay en board : int
   */
@@ -47,6 +47,7 @@ public class GeneticLightUp {
 
   /**
    * Se guarda en board el tablero con mejor solucion encontrada.
+   * @pre parametros no nulos
    * @param board : tablero sin focos : Casilla[][]
    * @return valor de verdad de encontrar una solucion optima : Casilla[][]
   */
@@ -107,6 +108,8 @@ public class GeneticLightUp {
 
   /**
    * Retorna el tablero en forma de String.
+   * 
+   * @pre parametro board no nulo
    * @param board : tablero que se desea imprimir : Casilla[][]
    * @return tablero en String para poder mostrarlo : String
   */

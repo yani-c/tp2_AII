@@ -15,7 +15,7 @@ import org.junit.Test;
 
 /**
  * Clase para testear los metodos de makeFitnessFunciton.
- * @author yani y agus
+ * @author Yanina Celi y Agustin Borda
  */
 public class MakeFitnessFunctionTest {
 

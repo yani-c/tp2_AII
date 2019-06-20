@@ -21,7 +21,8 @@ import lightup.GeneticLightUp;
 import lightup.MakeFitnessFunction;
 
 /**
- *Clase para la interfaz grafica del juego light up.
+ * Clase para la interfaz grafica del juego light up.
+ * @author Yanina Celi y Agustin Borda
  *
  */
 public class PantallaPrincipal extends JFrame {
